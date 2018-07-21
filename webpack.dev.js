@@ -5,6 +5,7 @@ const htmlWebpackPlugin=require("html-webpack-plugin");
 
 module.exports=merge(common,{
     devtool:"#@cheap-module-eval-source-map",//用于生成source map，有助于我们准确定位的错误来源文件
+    mode:"development",
     module:{
         rules:[
             {

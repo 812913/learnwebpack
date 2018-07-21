@@ -1,6 +1,5 @@
 const path=require("path");
 const htmlWebpackPlugin=require("html-webpack-plugin");
-const cleanWebpackPlugin=require("clean-webpack-plugin");
 
 module.exports={
     //单入口
@@ -50,7 +49,6 @@ module.exports={
         ]
     },
     plugins:[
-        new cleanWebpackPlugin(['dist']),//用来清理输出目录，在构建之前使用它来清理之前的输出目录，这样有助于保持输出目录的结构清晰
         new htmlWebpackPlugin({//该插件会在/dist中新生成一个index.html,并且会将所有的bundle自动添加到新的index.html中
             //title:'Output management' //这种方式直接生成index.html，不用定义模板
             template:__dirname+"/src/index.tmpl.html"

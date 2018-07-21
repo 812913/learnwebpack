@@ -4,6 +4,7 @@ const merge=require("webpack-merge");
 const uglifyjsPlugin=require("uglifyjs-webpack-plugin");
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const miniCssExtractPlugin=require("mini-css-extract-plugin");
+const cleanWebpackPlugin=require("clean-webpack-plugin");
 
 
 module.exports=merge(common,{
@@ -13,7 +14,7 @@ module.exports=merge(common,{
             {
                 test:/\.(sa|sc|c)ss$/,
                 use:[
-                    miniCssExtractPlugin.loader,
+                    miniCssExtractPlugin.loader,//不再使用style-loader
                     'css-loader',
                     'sass-loader'
                 ]
@@ -73,16 +74,18 @@ module.exports=merge(common,{
      
 
     plugins:[
-        new uglifyjsPlugin({//用于删除未引用的代码，从而压缩
-            sourceMap:true
-        }),
-        new webpack.DefinePlugin({//指定环境
-            'process.env.NODE_ENV':JSON.stringify('production')
-        }),
+        // new uglifyjsPlugin({//默认就是压缩过的，用于删除未引用的代码，从而压缩
+        //     sourceMap:true
+        // }),
+        // new webpack.DefinePlugin({//默认是production，不用指定
+        //     'process.env.NODE_ENV':JSON.stringify('production')
+        // }),
         new webpack.BannerPlugin("版本所有，翻版必究"),
          //new ExtractTextPlugin('./dist/style.css')
          new miniCssExtractPlugin({
             filename:'./css/[name].[hash:4].css',
         }),
+        new cleanWebpackPlugin(['dist']),//用来清理输出目录，在构建之前使用它来清理之前的输出目录，这样有助于保持输出目录的结构清晰
+
     ]
 })
